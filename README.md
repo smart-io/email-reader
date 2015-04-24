@@ -6,8 +6,6 @@ EmailReader
 [![Total Downloads](https://img.shields.io/packagist/dm/smart-io/email-reader.svg?style=flat)](https://packagist.org/packages/smart-io/email-reader)
 [![License](https://img.shields.io/packagist/l/smart-io/email-reader.svg?style=flat)](https://packagist.org/packages/smart-io/email-reader)
 
-# Email reader
-
 This library will read emails of a specific mailbox, will parse them and finally, dispatch them to handlers.
 [How to install](#installation)
 
@@ -21,7 +19,7 @@ https://github.com/willdurand/EmailReplyParser
 
 1. This library contains a command which is gonna check all new emails in your mailbox and give them to gearman. 1 new email = 1 new task on gearman.
 2. The gearman job will read the email, parse it and then, dispatch it to your application.
-3. Once gearman is finished with this email, the email is moved to another folder to mark it as done.
+3. Once gearman is finished with this email, the email is move to another folder to mark it as processed.
 
 ##configuration
 | Config            | Default | Description                                          |
