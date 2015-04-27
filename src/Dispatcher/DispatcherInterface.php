@@ -14,14 +14,14 @@ interface DispatcherInterface
     public function getHandlers();
 
     /**
-     * @param string   $subjectRegex
-     * @param callable $callback
+     * @param string $subjectRegex
+     * @param        $callback
      *
      * @return $this
      *
      * @throws DispatcherException
      */
-    public function addHandler($subjectRegex, callable $callback);
+    public function addHandler($subjectRegex, $callback);
 
     /**
      * @param DispatcherInterface $dispatcher

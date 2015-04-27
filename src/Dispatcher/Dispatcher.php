@@ -24,13 +24,13 @@ abstract class Dispatcher implements DispatcherInterface
 
     /**
      * @param string   $subjectRegex
-     * @param callable $callback
+     * @param $callback
      *
      * @return $this
      *
      * @throws DispatcherException
      */
-    public function addHandler($subjectRegex, callable $callback)
+    public function addHandler($subjectRegex, $callback)
     {
 
         if (!isset($this->handlers[$subjectRegex])) {
