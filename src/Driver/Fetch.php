@@ -164,11 +164,11 @@ class Fetch implements EmailReaderDriverInterface
         $senderName = explode('<', $message->getAddresses('from', true));
         $senderName = trim($senderName[0]);
 
-        $recipientEmail = $message->getAddresses('to', false);
-        $recipientEmail = trim($recipientEmail[0]);
+        $recipientEmail = $message->getAddresses('to', true);
+        $recipientEmail = trim($recipientEmail);
 
-        $senderEmail = $message->getAddresses('from', false);
-        $senderEmail = trim($senderEmail[0]);
+        $senderEmail = $message->getAddresses('from', true);
+        $senderEmail = trim($senderEmail);
 
         $emailTextBody = trim($message->getMessageBody(false));
         $emailHtmlBody = trim($message->getMessageBody(true));
