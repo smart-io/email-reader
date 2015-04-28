@@ -147,10 +147,6 @@ class Fetch implements EmailReaderDriverInterface
             $this->getMailServerconfig()->getPassword()
         );
 
-//        $this->mailServer->setMailBox(
-//            $this->getMailServerconfig()->getMainMailbox()
-//        );
-
         $this->isConnected = true;
     }
 
@@ -164,6 +160,15 @@ class Fetch implements EmailReaderDriverInterface
 
         $recipientName = explode('<', $message->getAddresses('to', true));
         $recipientName = trim($recipientName[0]);
+
+        $senderName = explode('<', $message->getAddresses('from', true));
+        $senderName = trim($senderName[0]);
+
+        $recipientEmail = $message->getAddresses('to', false);
+        $recipientEmail = trim($recipientEmail[0]);
+
+        $senderEmail = $message->getAddresses('from', false);
+        $senderEmail = trim($senderEmail[0]);
 
         $emailTextBody = trim($message->getMessageBody(false));
         $emailHtmlBody = trim($message->getMessageBody(true));
@@ -182,7 +187,9 @@ class Fetch implements EmailReaderDriverInterface
             ->setHtmlBody($emailHtmlBody)
             ->setLastReply($lastReply)
             ->setRecipientName($recipientName)
-            ->setRecipientEmail($message->getAddresses('to', false))
+            ->setRecipientEmail($recipientEmail)
+            ->setSenderName($senderName)
+            ->setSenderEmail($senderEmail)
             ->setAttachments($attachments);
     }
 }

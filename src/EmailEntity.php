@@ -53,6 +53,16 @@ class EmailEntity
     private $recipientEmail;
 
     /**
+     * @var string
+     */
+    private $senderName;
+
+    /**
+     * @var string
+     */
+    private $senderEmail;
+
+    /**
      * @var array
      */
     private $attachments;
@@ -233,6 +243,46 @@ class EmailEntity
     public function setRecipientEmail($recipientEmail)
     {
         $this->recipientEmail = $recipientEmail;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSenderName()
+    {
+        return $this->senderName;
+    }
+
+    /**
+     * @param string $senderName
+     *
+     * @return $this
+     */
+    public function setSenderName($senderName)
+    {
+        $this->senderName = $senderName;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSenderEmail()
+    {
+        return $this->senderEmail;
+    }
+
+    /**
+     * @param string $senderEmail
+     *
+     * @return $this
+     */
+    public function setSenderEmail($senderEmail)
+    {
+        $this->senderEmail = $senderEmail;
 
         return $this;
     }
