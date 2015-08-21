@@ -96,9 +96,9 @@ abstract class EmailReaderDispatchJob
 
         try {
 
-//            $processedMailbox = $this->emailReaderDriver->getMailServerconfig()
-//                ->getProcessedMailbox();
-//            $this->emailReaderDriver->moveEmail($email, $processedMailbox);
+            $processedMailbox = $this->emailReaderDriver->getMailServerconfig()
+                ->getProcessedMailbox();
+            $this->emailReaderDriver->moveEmail($email, $processedMailbox);
 
         } catch (Exception $e) {
 
