@@ -1,6 +1,6 @@
 <?php
 
-namespace Smart\EmailReader;
+namespace Smart\EmailReader\Logger;
 
 use Cocur\Slugify\Slugify;
 use Psr\Log\LoggerInterface;

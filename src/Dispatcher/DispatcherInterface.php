@@ -1,7 +1,5 @@
 <?php
-/**
- * ${CARET}
- */
+
 namespace Smart\EmailReader\Dispatcher;
 
 use Smart\EmailReader\EmailEntity;

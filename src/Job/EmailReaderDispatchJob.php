@@ -1,15 +1,15 @@
 <?php
 
-namespace Smart\EmailReader;
+namespace Smart\EmailReader\Job;
 
 use Exception;
-use GearmanJob;
 use Psr\Log\LoggerInterface;
 use Smart\EmailReader\Dispatcher\DispatcherInterface;
 use Smart\EmailReader\Driver\EmailReaderDriverInterface;
-use Sinergi\Gearman\JobInterface;
+use Smart\EmailReader\EmailEntity;
+use Smart\EmailReader\EmailReaderLogger;
 
-class EmailReaderDispatchJob implements JobInterface
+abstract class EmailReaderDispatchJob
 {
     const JOB_NAME = 'emailreader:dispatch';
 
@@ -53,16 +53,12 @@ class EmailReaderDispatchJob implements JobInterface
     }
 
     /**
-     * @param GearmanJob|null $job
+     * @param int $emailUId
      *
      * @return mixed
      */
-    public function execute(GearmanJob $job = null)
+    public function executeJob($emailUId)
     {
-
-        //todo : find a way to lock email
-
-        $emailUId = unserialize($job->workload());
 
         $this->emailReaderLogger->info('Processing email # ' . $emailUId);
 
@@ -78,7 +74,6 @@ class EmailReaderDispatchJob implements JobInterface
 
             $this->emailReaderLogger->error('Reader driver return an error : '
                 . $e->getMessage());
-
         }
 
         if (!isset($email) || !($email instanceof EmailEntity)) {

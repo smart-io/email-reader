@@ -1,22 +1,24 @@
 <?php
 
-namespace Smart\EmailReader;
+namespace Smart\EmailReader\Command;
 
 use Fetch\Message;
-use Sinergi\Gearman\Dispatcher;
 use Smart\EmailReader\Driver\EmailReaderDriverInterface;
+use Smart\EmailReader\Job\EmailReaderDispatchJob;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Smart\EmailReader\Job\Dispatcher\JobDispatcherInterface;
+use Smart\EmailReader\EmailEntity;
 
 class EmailReaderSendCommand extends Command
 {
     const COMMAND_NAME = 'emailreader:send-new-emails';
 
     /**
-     * @var Dispatcher
+     * @var JobDispatcherInterface
      */
-    private $gearmanDispatcher;
+    private $jobDispatcher;
 
     /**
      * @var EmailReaderDriverInterface
@@ -24,15 +26,15 @@ class EmailReaderSendCommand extends Command
     private $emailReaderDriver;
 
     /**
-     * @param Dispatcher                 $gearmanDispatcher
+     * @param JobDispatcherInterface                 $jobDispatcher
      * @param EmailReaderDriverInterface $emailReaderDriver
      */
     public function __construct(
-        Dispatcher $gearmanDispatcher,
+        JobDispatcherInterface $jobDispatcher,
         EmailReaderDriverInterface $emailReaderDriver
     ) {
 
-        $this->setGearmanDispatcher($gearmanDispatcher);
+        $this->setJobDispatcher($jobDispatcher);
         $this->setEmailReaderDriver($emailReaderDriver);
 
         parent::__construct();
@@ -41,7 +43,7 @@ class EmailReaderSendCommand extends Command
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME)
-            ->setDescription('This sends all new emails to gearman');
+            ->setDescription('This sends all new emails to job worker');
     }
 
     /**
@@ -62,16 +64,16 @@ class EmailReaderSendCommand extends Command
         }
 
         $output->write('Sending ' . count($pendingEmails)
-            . ' emails to gearman: ');
+            . ' emails to job worker: ');
 
 
         foreach ($pendingEmails as $pendingEmail) {
 
             /** @var EmailEntity $pendingEmail */
 
-            $this->getGearmanDispatcher()->execute(
-                EmailReaderDispatchJob::JOB_NAME, $pendingEmail->getUid(),
-                null, EmailReaderDispatchJob::JOB_NAME
+            $this->getJobDispatcher()->dispatch(
+                EmailReaderDispatchJob::JOB_NAME,
+                $pendingEmail->getUid()
             );
         }
 
@@ -79,21 +81,21 @@ class EmailReaderSendCommand extends Command
     }
 
     /**
-     * @return Dispatcher
+     * @return JobDispatcherInterface
      */
-    public function getGearmanDispatcher()
+    public function getJobDispatcher()
     {
-        return $this->gearmanDispatcher;
+        return $this->jobDispatcher;
     }
 
     /**
-     * @param Dispatcher $gearmanDispatcher
+     * @param JobDispatcherInterface $jobDispatcher
      *
      * @return $this
      */
-    public function setGearmanDispatcher(Dispatcher $gearmanDispatcher)
+    public function setJobDispatcher(JobDispatcherInterface $jobDispatcher)
     {
-        $this->gearmanDispatcher = $gearmanDispatcher;
+        $this->jobDispatcher = $jobDispatcher;
 
         return $this;
     }
