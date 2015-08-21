@@ -3,11 +3,10 @@
 namespace Smart\EmailReader\Job;
 
 use Exception;
-use Psr\Log\LoggerInterface;
 use Smart\EmailReader\Dispatcher\DispatcherInterface;
 use Smart\EmailReader\Driver\EmailReaderDriverInterface;
 use Smart\EmailReader\EmailEntity;
-use Smart\EmailReader\EmailReaderLogger;
+use Smart\EmailReader\Logger\EmailReaderLogger;
 
 abstract class EmailReaderDispatchJob
 {
@@ -97,9 +96,9 @@ abstract class EmailReaderDispatchJob
 
         try {
 
-            $processedMailbox = $this->emailReaderDriver->getMailServerconfig()
-                ->getProcessedMailbox();
-            $this->emailReaderDriver->moveEmail($email, $processedMailbox);
+//            $processedMailbox = $this->emailReaderDriver->getMailServerconfig()
+//                ->getProcessedMailbox();
+//            $this->emailReaderDriver->moveEmail($email, $processedMailbox);
 
         } catch (Exception $e) {
 
