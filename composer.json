@@ -5,8 +5,7 @@
   "keywords": [
     "Email",
     "Reader",
-    "Dispatcher",
-    "Gearman"
+    "Dispatcher"
   ],
   "homepage": "https://github.com/smart-io/email-reader",
   "license": "MIT",
@@ -26,9 +25,6 @@
   },
   "require-dev": {
     "phpunit/phpunit": "~4"
-  },
-  "suggest": {
-    "ext-gearman": "This library needs Gearman"
   },
   "autoload": {
     "psr-4": {
